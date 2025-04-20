@@ -1,0 +1,93 @@
+2025-04-20T17:03:34.064Z [INFO]: Server running on port 3000
+2025-04-20T17:03:34.074Z [INFO]: Data loaded: 0 whiskies
+2025-04-20T17:04:52.799Z [INFO]: Server running on port 3000
+2025-04-20T17:04:52.808Z [INFO]: Data loaded: 0 whiskies
+2025-04-20T17:07:11.275Z [INFO]: Server running on port 3000
+2025-04-20T17:07:11.285Z [INFO]: Data loaded: 0 whiskies
+2025-04-20T17:09:04.147Z [INFO]: Server running on port 3000
+2025-04-20T17:09:04.156Z [INFO]: Data loaded: 0 whiskies
+2025-04-20T17:09:47.625Z [INFO]: Server running on port 3000
+2025-04-20T17:09:47.653Z [INFO]: Data loaded: 0 whiskies
+2025-04-20T17:11:51.330Z [INFO]: Server running on port 3000
+2025-04-20T17:11:51.340Z [INFO]: Data loaded: 0 whiskies
+2025-04-20T17:13:25.609Z [INFO]: Server running on port 3000
+2025-04-20T17:13:25.618Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:13:46.380Z [INFO]: Server running on port 3000
+2025-04-20T17:13:46.394Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:15:28.992Z [INFO]: GET /api/recommendations/carriebaxus
+2025-04-20T17:15:50.284Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:15:55.071Z [ERROR]: Recommendation error: Cannot read properties of undefined (reading 'cosineSimilarity')
+2025-04-20T17:15:55.080Z [ERROR]: Server error:
+2025-04-20T17:16:02.956Z [INFO]: GET /
+2025-04-20T17:16:03.088Z [INFO]: GET /favicon.ico
+2025-04-20T17:16:03.106Z [INFO]: GET /
+2025-04-20T17:18:24.313Z [INFO]: Server running on port 3000
+2025-04-20T17:18:24.324Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:18:27.542Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:18:31.381Z [ERROR]: Recommendation error: cosine-similarity()::invalid input argument. First argument must be an array. Value: `[object Object]`.
+2025-04-20T17:18:31.390Z [ERROR]: Server error:
+2025-04-20T17:18:39.221Z [INFO]: GET /
+2025-04-20T17:18:39.255Z [INFO]: GET /favicon.ico
+2025-04-20T17:18:39.273Z [INFO]: GET /
+2025-04-20T17:19:52.922Z [INFO]: Server running on port 3000
+2025-04-20T17:19:52.934Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:19:57.877Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:20:06.118Z [ERROR]: Recommendation error: cosine-similarity()::invalid input argument. First argument must be an array. Value: `[object Object]`.
+2025-04-20T17:20:06.138Z [ERROR]: Server error:
+2025-04-20T17:20:15.974Z [INFO]: GET /
+2025-04-20T17:20:16.003Z [INFO]: GET /favicon.ico
+2025-04-20T17:20:16.022Z [INFO]: GET /
+2025-04-20T17:25:34.711Z [INFO]: Server running on port 3000
+2025-04-20T17:25:34.722Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:25:48.109Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:25:54.715Z [ERROR]: Recommendation error: cosine-similarity()::invalid input argument. First argument must be an array. Value: `[object Object]`.
+2025-04-20T17:25:54.734Z [ERROR]: Server error:
+2025-04-20T17:30:00.068Z [INFO]: Server running on port 3000
+2025-04-20T17:30:00.080Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:30:15.236Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:31:48.447Z [INFO]: Server running on port 3000
+2025-04-20T17:31:48.458Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:31:48.991Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:32:08.600Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:32:59.067Z [INFO]: Server running on port 3000
+2025-04-20T17:32:59.079Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:33:06.302Z [INFO]: Server running on port 3000
+2025-04-20T17:33:06.314Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:33:13.749Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:34:55.201Z [INFO]: GET /
+2025-04-20T17:34:55.265Z [INFO]: GET /favicon.ico
+2025-04-20T17:34:55.307Z [INFO]: GET /
+2025-04-20T17:35:32.557Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:35:48.424Z [INFO]: GET /
+2025-04-20T17:35:48.452Z [INFO]: GET /favicon.ico
+2025-04-20T17:35:48.466Z [INFO]: GET /
+2025-04-20T17:36:34.030Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:36:50.059Z [INFO]: GET /
+2025-04-20T17:36:50.083Z [INFO]: GET /favicon.ico
+2025-04-20T17:36:50.099Z [INFO]: GET /
+2025-04-20T17:36:55.310Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:37:08.941Z [INFO]: GET /
+2025-04-20T17:37:08.961Z [INFO]: GET /favicon.ico
+2025-04-20T17:37:08.976Z [INFO]: GET /
+2025-04-20T17:37:19.296Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:37:32.244Z [INFO]: GET /
+2025-04-20T17:37:32.274Z [INFO]: GET /favicon.ico
+2025-04-20T17:37:32.286Z [INFO]: GET /
+2025-04-20T17:37:36.326Z [INFO]: GET /api/recommendations/user/josh
+2025-04-20T17:37:41.394Z [ERROR]: API Service Error:
+2025-04-20T17:37:41.395Z [WARN]: Failed to fetch user bar for josh, using cold start: Failed to fetch user bar data
+2025-04-20T17:37:48.450Z [INFO]: GET /
+2025-04-20T17:37:48.471Z [INFO]: GET /favicon.ico
+2025-04-20T17:37:48.489Z [INFO]: GET /
+2025-04-20T17:42:39.613Z [INFO]: Server running on port 3000
+2025-04-20T17:42:39.629Z [INFO]: Data loaded: 501 whiskies
+2025-04-20T17:42:46.320Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:44:40.842Z [INFO]: GET /
+2025-04-20T17:44:40.902Z [INFO]: GET /favicon.ico
+2025-04-20T17:44:40.932Z [INFO]: GET /
+2025-04-20T17:46:23.169Z [INFO]: GET /api/recommendations/user/carriebaxus
+2025-04-20T17:46:39.549Z [INFO]: GET /
+2025-04-20T17:46:39.582Z [INFO]: GET /favicon.ico
+2025-04-20T17:46:39.597Z [INFO]: GET /
+2025-04-20T18:03:45.054Z [INFO]: Server running on port 3000
+2025-04-20T18:03:45.127Z [INFO]: Data loaded: 501 whiskies
