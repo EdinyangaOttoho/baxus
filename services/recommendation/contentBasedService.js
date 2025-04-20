@@ -13,7 +13,7 @@ class ContentBasedService {
     this.wordnet = wordnet;
   }
 
-  async getRecommendations(userWhiskies, allWhiskies, limit = 10) {
+  async getRecommendations(userWhiskies, allWhiskies, limit = 501) {
     if (!userWhiskies || userWhiskies.length === 0) {
       return [];
     }

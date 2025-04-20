@@ -9,6 +9,7 @@ const tokenizer = new natural.WordTokenizer();
 const synonymCache = new Map();
 
 module.exports = {
+
   calculateJaccardSimilarity(setA, setB) {
     const intersection = new Set([...setA].filter(x => setB.includes(x))).size;
     const union = new Set([...setA, ...setB]).size;
@@ -16,6 +17,7 @@ module.exports = {
   },
 
   async calculateTextSimilarity(text1, text2) {
+    
     if (!text1 || !text2) return 0;
     
     const tokens1 = tokenizer.tokenize(text1.toLowerCase());

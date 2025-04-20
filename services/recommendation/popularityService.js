@@ -2,7 +2,7 @@ const whiskyModel = require('../../models/whiskyModel');
 const logger = require('../../utils/logger');
 
 class PopularityService {
-  async getRecommendations(limit = 10) {
+  async getRecommendations(limit = 501) {
     await whiskyModel.loadWhiskies();
     return whiskyModel.getPopularWhiskies(limit).map(whisky => ({
       ...whisky,

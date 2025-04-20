@@ -1,9 +1,0 @@
-2025-04-20T17:15:55.071Z [ERROR]: Recommendation error: Cannot read properties of undefined (reading 'cosineSimilarity')
-2025-04-20T17:15:55.080Z [ERROR]: Server error:
-2025-04-20T17:18:31.381Z [ERROR]: Recommendation error: cosine-similarity()::invalid input argument. First argument must be an array. Value: `[object Object]`.
-2025-04-20T17:18:31.390Z [ERROR]: Server error:
-2025-04-20T17:20:06.118Z [ERROR]: Recommendation error: cosine-similarity()::invalid input argument. First argument must be an array. Value: `[object Object]`.
-2025-04-20T17:20:06.138Z [ERROR]: Server error:
-2025-04-20T17:25:54.715Z [ERROR]: Recommendation error: cosine-similarity()::invalid input argument. First argument must be an array. Value: `[object Object]`.
-2025-04-20T17:25:54.734Z [ERROR]: Server error:
-2025-04-20T17:37:41.394Z [ERROR]: API Service Error:

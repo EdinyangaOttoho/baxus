@@ -2,7 +2,6 @@ const contentBasedService = require('./contentBasedService');
 const popularityService = require('./popularityService');
 const whiskyModel = require('../../models/whiskyModel');
 const config = require('../../config/config');
-const logger = require('../../utils/logger');
 
 class HybridService {
   constructor() {
@@ -11,7 +10,7 @@ class HybridService {
     this.diversityWeight = config.recommendation.weights.diversity;
   }
 
-  async getRecommendations(userWhiskies, limit = 5) {
+  async getRecommendations(userWhiskies, limit = 501) {
     await whiskyModel.loadWhiskies();
     const allWhiskies = whiskyModel.getAllWhiskies();
 
@@ -24,6 +23,8 @@ class HybridService {
         allWhiskies, 
         limit * 2
       );
+
+      console.log(contentBasedRecs);
       
       // Get popular recommendations
       const popularRecs = await popularityService.getRecommendations(limit * 2);
@@ -73,14 +74,35 @@ class HybridService {
     });
     
     // Sort by combined score
-    return Array.from(uniqueMap.values())
+    const result =  Array.from(uniqueMap.values())
       .sort((a, b) => {
         // Apply different weights based on recommendation type
         const aWeight = this._getTypeWeight(a.type);
         const bWeight = this._getTypeWeight(b.type);
         return (b.score * bWeight) - (a.score * aWeight);
       })
-      .slice(0, limit);
+      .slice(0, 5);
+
+    return this._fisherYatesShuffle(result);
+    
+  }
+
+  _fisherYatesShuffle(array) {
+
+    let currentIndex = array.length, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    
+    return array;
+
   }
 
   _getTypeWeight(type) {
