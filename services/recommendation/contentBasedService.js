@@ -38,7 +38,7 @@ class ContentBasedService {
         ...item.whisky,
         score: item.score,
         type: 'content',
-        reason: this._generateReason(item.whisky, userWhiskies)
+        reason: this._generateReason(item.whisky, userWhiskies, userProfile.priceRange)
       }));
   }
 
@@ -47,12 +47,14 @@ class ContentBasedService {
       brands: new Set(),
       spiritTypes: new Set(),
       proofs: [],
+      prices: [],
       tastingNotes: []
     };
 
     userWhiskies.forEach(whisky => {
       profile.brands.add(whisky.product.brand);
       profile.spiritTypes.add(whisky.product.spirit);
+      profile.prices.push(whisky.product.shelf_price);
       profile.proofs.push(parseFloat(whisky.product.proof) || 0);
       
       // Extract tasting notes from description (simplified)
@@ -66,18 +68,27 @@ class ContentBasedService {
       brands: Array.from(profile.brands),
       spiritTypes: Array.from(profile.spiritTypes),
       avgProof: profile.proofs.reduce((a, b) => a + b, 0) / profile.proofs.length,
-      tastingNotes: [...new Set(profile.tastingNotes)]
+      tastingNotes: [...new Set(profile.tastingNotes)],
+      priceRange: [Math.min(profile.prices), Math.max(profile.prices)]
     };
   }
 
   async _calculateScore(whisky, userProfile) {
+
     const weights = config.recommendation.contentFields;
+    
     let score = 0;
 
     // Brand similarity
     if (userProfile.brands.includes(whisky.brand)) {
       score += weights.brand;
     }
+
+    // Price similarity
+
+    const priceSimilarity = similarity.calculatePriceSimilarity(userProfile.priceRange, whisky.fair_price); // Call price similarity
+
+    score += priceSimilarity * weights.price;
 
     // Spirit type similarity
     if (userProfile.spiritTypes.includes(whisky.spiritType)) {
@@ -110,8 +121,17 @@ class ContentBasedService {
     return Math.min(1, score);
   }
 
-  _generateReason(whisky, userWhiskies) {
+  _generateReason(whisky, userWhiskies, priceRange=null) {
+
     const reasons = [];
+
+    // Price reason
+
+    const [minPrice, maxPrice] = priceRange;
+    
+    if (whisky.fair_price >= minPrice && whisky.fair_price <= maxPrice) {
+      reasons.push(`price ($${whisky.fair_price}) is around your preferred range`);
+    }
     
     // Check for brand match
     const brandMatch = userWhiskies.some(w => w.product.brand === whisky.brand);
@@ -140,6 +160,9 @@ class ContentBasedService {
     
     return `Recommended because it's ${reasons.join(' and ')}.`;
   }
+
+
+
 }
 
 module.exports = new ContentBasedService();

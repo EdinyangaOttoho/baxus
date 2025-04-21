@@ -94,5 +94,23 @@ module.exports = {
   calculateProofSimilarity(proof1, proof2) {
     const diff = Math.abs(proof1 - proof2);
     return 1 - (diff / 150);
+  },
+
+  calculatePriceSimilarity(priceRange, whiskeyPrice) {
+    if (!priceRange) {
+        return 0; // No price range provided, no similarity
+    }
+
+    const [minPrice, maxPrice] = priceRange;
+
+    if (whiskeyPrice >= minPrice && whiskeyPrice <= maxPrice) {
+        return 1; // Perfect match
+    } else if (whiskeyPrice < minPrice) {
+        // Gradual decrease if below min, but never negative
+        return Math.max(0, 1 - (minPrice - whiskeyPrice) / minPrice);
+    } else {
+        // Gradual decrease if above max, but never negative
+        return Math.max(0, 1 - (whiskeyPrice - maxPrice) / maxPrice);
+    }
   }
 };

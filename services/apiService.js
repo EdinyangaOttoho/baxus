@@ -8,10 +8,7 @@ class ApiService {
     this.cache = new NodeCache({ stdTTL: 300 });
     this.axiosInstance = axios.create({
       baseURL: config.baxusApi.baseUrl,
-      timeout: config.baxusApi.timeout,
-      headers: {
-        'Authorization': `Bearer ${process.env.BAXUS_API_KEY}`
-      }
+      timeout: config.baxusApi.timeout
     });
   }
 

@@ -8,7 +8,7 @@ module.exports = {
   },
   recommendation: {
     maxRecommendations: 10,
-    minSimilarityScore: 0.5,
+    minSimilarityScore: 0.2,
     coldStartStrategy: 'hybrid',
     weights: {
       contentBased: 0.6,
@@ -20,7 +20,8 @@ module.exports = {
       brand: 0.3,
       spiritType: 0.2,
       proof: 0.05,
-      tastingNotes: 0.05
+      tastingNotes: 0.05,
+      price: 0.5
     }
   },
   cache: {
