@@ -23,8 +23,6 @@ class HybridService {
         allWhiskies, 
         limit * 2
       );
-
-      console.log(contentBasedRecs);
       
       // Get popular recommendations
       const popularRecs = await popularityService.getRecommendations(limit * 2);
