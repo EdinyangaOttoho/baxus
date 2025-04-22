@@ -59,7 +59,7 @@ class ApiService {
           private: item.product.private,
           verified_date: item.product.verified_date
         },
-        whisky_ids: response.data.map(i=>i.product.id)
+        whisky_ids: response.data.map(i=>parseInt(i.product.id, 10))
       }));
       
       this.cache.set(cacheKey, normalized);
