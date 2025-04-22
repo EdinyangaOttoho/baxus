@@ -26,7 +26,7 @@ class HybridService {
       );
       
       // Get popular recommendations
-      const popularRecs = await popularityService.getRecommendations(limit * 2);
+      const popularRecs = await popularityService.getRecommendations(limit * 2, userWhiskies);
       
       // Combine and re-rank
       recommendations = this._combineRecommendations(
@@ -36,7 +36,7 @@ class HybridService {
       );
     } else {
       // Cold start - use hybrid of popular and diverse
-      const popularRecs = await popularityService.getRecommendations(limit);
+      const popularRecs = await popularityService.getRecommendations(limit, userWhiskies);
       const diverseRecs = whiskyModel.getDiverseWhiskies(limit)
         .map(whisky => ({
           ...whisky,
