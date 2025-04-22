@@ -45,7 +45,7 @@ class ContentBasedService {
     // Filter and sort
     const result = scoredWhiskies
       .filter(item => item.score >= config.recommendation.minSimilarityScore)
-      .filter(item => !(userWhiskies.map(x=>x.product.id.toString()).includes(item.id.toString())))
+      .filter(item => !(userWhiskies.map(x=>x.product.id.toString()).includes(item.whisky.id.toString())))
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
       .map(item => ({
