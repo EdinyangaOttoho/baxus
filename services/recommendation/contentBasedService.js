@@ -152,7 +152,7 @@ class ContentBasedService {
 
     // Image similarity reason
     if (visualScore > 0.5) {
-      reasons.push(`visually similar to your selections (score: ${visualScore})`);
+      reasons.push(`visually similar to your selections`);
     }
 
     // Price reason

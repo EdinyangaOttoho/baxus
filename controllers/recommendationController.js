@@ -47,7 +47,6 @@ class RecommendationController {
           fairPrice: rec.fairPrice,
           shelfPrice: rec.shelfPrice,
           reason: rec.reason,
-          matchScore: rec.score.toFixed(3),
           recommendationType: rec.type
         }))
       });
