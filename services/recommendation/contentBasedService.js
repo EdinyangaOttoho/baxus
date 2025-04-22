@@ -29,7 +29,7 @@ class ContentBasedService {
         let visualScore = 0;
         try {
           visualScore = imageSimilarity.calculateVisualSimilarity(
-            userWhiskies.whisky_ids,
+            userWhiskies[0].whisky_ids,
             whisky.id
           );
         }
