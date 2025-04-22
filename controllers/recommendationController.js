@@ -16,11 +16,12 @@ class RecommendationController {
       }
       
       const recommendations = await hybridService.getRecommendations(
-        userBar,
-        config.recommendation.maxRecommendations
+        userBar.whiskies,
+        config.recommendation.maxRecommendations,
+        userBar.whisky_ids
       );
       
-      if (recommendations.length === 0) {
+      if (recommendations?.length === 0) {
         return res.status(404).json({ 
           error: 'No recommendations available',
           suggestions: [
@@ -32,8 +33,8 @@ class RecommendationController {
       
       res.json({
         username,
-        hasExistingCollection: userBar.length > 0,
-        count: recommendations.length,
+        hasExistingCollection: userBar.whiskies?.length > 0,
+        count: recommendations?.length,
         recommendations: recommendations.map(rec => ({
           id: rec.id,
           name: rec.name,
@@ -46,7 +47,7 @@ class RecommendationController {
           fairPrice: rec.fairPrice,
           shelfPrice: rec.shelfPrice,
           reason: rec.reason,
-          matchScore: rec.score.toFixed(2),
+          matchScore: rec.score.toFixed(3),
           recommendationType: rec.type
         }))
       });

@@ -134,8 +134,6 @@ class ImageProcessor {
                     const similarity = this._cosineSimilarity(userEmbedding, candidateEmbedding);
                     totalSimilarity += similarity;
                     validWhiskyCount++;
-                } else {
-                    console.warn(`No embedding found for user whisky ID: ${whiskyId}`);
                 }
             });
 

@@ -10,7 +10,7 @@ class HybridService {
     this.diversityWeight = config.recommendation.weights.diversity;
   }
 
-  async getRecommendations(userWhiskies, limit = 501) {
+  async getRecommendations(userWhiskies, limit = 501, whiskyIds) {
     await whiskyModel.loadWhiskies();
     const allWhiskies = whiskyModel.getAllWhiskies();
 
@@ -21,7 +21,8 @@ class HybridService {
       const contentBasedRecs = await contentBasedService.getRecommendations(
         userWhiskies, 
         allWhiskies, 
-        limit * 2
+        limit * 2,
+        whiskyIds
       );
       
       // Get popular recommendations
@@ -30,7 +31,7 @@ class HybridService {
       // Combine and re-rank
       recommendations = this._combineRecommendations(
         contentBasedRecs, 
-        popularRecs, 
+        popularRecs,
         limit
       );
     } else {
@@ -39,7 +40,7 @@ class HybridService {
       const diverseRecs = whiskyModel.getDiverseWhiskies(limit)
         .map(whisky => ({
           ...whisky,
-          score: 1,
+          score: 0.45,
           type: 'diversity',
           reason: `Diverse selection representing ${whisky.spiritType} category`
         }));

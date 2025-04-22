@@ -28,6 +28,8 @@ class ApiService {
       if (!response.data || !Array.isArray(response.data)) {
         throw new Error('Invalid user bar data format');
       }
+
+      const userProfile = {};
       
       const normalized = response.data.map(item => ({
         id: item.id,
@@ -58,12 +60,14 @@ class ApiService {
           barrel_pick: item.product.barrel_pick,
           private: item.product.private,
           verified_date: item.product.verified_date
-        },
-        whisky_ids: response.data.map(i=>parseInt(i.product.id, 10))
+        }
       }));
+
+      userProfile.whiskies = normalized;
+      userProfile.whisky_ids = response.data.map(item=>parseInt(item.product.id, 10));
       
-      this.cache.set(cacheKey, normalized);
-      return normalized;
+      this.cache.set(cacheKey, userProfile);
+      return userProfile;
     } catch (error) {
       if (error.response && error.response.status === 404) {
         logger.info(`User ${username} has no bar items or doesn't exist`);

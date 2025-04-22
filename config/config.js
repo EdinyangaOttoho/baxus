@@ -22,7 +22,7 @@ module.exports = {
       proof: 0.05,
       tastingNotes: 0.05,
       price: 0.8,
-      visual: 1.2
+      visual: 1.5
     }
   },
   cache: {

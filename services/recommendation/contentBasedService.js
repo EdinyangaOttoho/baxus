@@ -14,7 +14,7 @@ class ContentBasedService {
     this.wordnet = wordnet;
   }
 
-  async getRecommendations(userWhiskies, allWhiskies, limit = 501) {
+  async getRecommendations(userWhiskies, allWhiskies, limit = 501, whiskyIds) {
 
     if (!userWhiskies || userWhiskies.length === 0) {
       return [];
@@ -29,8 +29,8 @@ class ContentBasedService {
         let visualScore = 0;
         try {
           visualScore = imageSimilarity.calculateVisualSimilarity(
-            userWhiskies[0].whisky_ids,
-            whisky.id
+            whiskyIds,
+            parseInt(whisky.id, 10)
           );
         }
         catch (error) {}
@@ -43,7 +43,7 @@ class ContentBasedService {
     );
 
     // Filter and sort
-    return scoredWhiskies
+    const result = scoredWhiskies
       .filter(item => item.score >= config.recommendation.minSimilarityScore)
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
@@ -53,6 +53,9 @@ class ContentBasedService {
         type: 'content',
         reason: this._generateReason(item.whisky, userWhiskies, userProfile.priceRange, item.visualScore)
       }));
+
+    return result;
+
   }
 
   _createUserProfile(userWhiskies) {
@@ -67,7 +70,7 @@ class ContentBasedService {
     userWhiskies.forEach(whisky => {
       profile.brands.add(whisky.product.brand);
       profile.spiritTypes.add(whisky.product.spirit);
-      profile.prices.push(whisky.product.shelf_price);
+      profile.prices.push(parseFloat(whisky.product.shelf_price) || 0);
       profile.proofs.push(parseFloat(whisky.product.proof) || 0);
       
       // Extract tasting notes from description (simplified)
@@ -77,13 +80,19 @@ class ContentBasedService {
       }
     });
 
-    return {
+    const min = Math.min(...profile.prices);
+    const max = Math.max(...profile.prices)
+
+    const result = {
       brands: Array.from(profile.brands),
       spiritTypes: Array.from(profile.spiritTypes),
       avgProof: profile.proofs.reduce((a, b) => a + b, 0) / profile.proofs.length,
       tastingNotes: [...new Set(profile.tastingNotes)],
-      priceRange: [Math.min(profile.prices), Math.max(profile.prices)]
+      priceRange: [min, max]
     };
+
+    return result;
+
   }
 
   async _calculateScore(whisky, userProfile, visualScore) {
@@ -92,22 +101,23 @@ class ContentBasedService {
     
     let score = 0;
 
+    // Image similarity
+    score += (visualScore * weights.visual) || 0;
+
     // Brand similarity
     if (userProfile.brands.includes(whisky.brand)) {
-      score += weights.brand;
+      score += weights.brand || 0;
     }
 
     // Price similarity
 
     const priceSimilarity = similarity.calculatePriceSimilarity(userProfile.priceRange, whisky.fair_price); // Call price similarity
 
-    score += priceSimilarity * weights.price;
-
-    score += visualScore * weights.visual;
+    score += (priceSimilarity * weights.price) || 0;
 
     // Spirit type similarity
     if (userProfile.spiritTypes.includes(whisky.spiritType)) {
-      score += weights.spiritType;
+      score += weights.spiritType || 0;
     }
 
     // Name similarity
@@ -115,12 +125,12 @@ class ContentBasedService {
       whisky.name, 
       userProfile.brands.join(' ') + ' ' + userProfile.spiritTypes.join(' ')
     );
-    score += nameSimilarity * weights.name;
+    score += (nameSimilarity * weights.name) || 0;
 
     // Proof similarity (normalized)
     const proofDiff = Math.abs(whisky.proof - userProfile.avgProof);
     const proofSimilarity = 1 - (proofDiff / 150); // Max proof difference assumed to be 150
-    score += proofSimilarity * weights.proof;
+    score += (proofSimilarity * weights.proof) || 0;
 
     // Tasting notes similarity
     if (whisky.description) {
@@ -130,19 +140,19 @@ class ContentBasedService {
         whiskyNotes,
         userProfile.tastingNotes
       );
-      score += notesSimilarity * weights.tastingNotes;
+      score += (notesSimilarity * weights.tastingNotes) || 0;
     }
 
     return Math.min(1, score);
   }
 
-  _generateReason(whisky, userWhiskies, priceRange=null) {
+  _generateReason(whisky, userWhiskies, priceRange=null, visualScore) {
 
     const reasons = [];
 
     // Image similarity reason
     if (visualScore > 0.5) {
-      reasons.push(`visually similar to your selections`);
+      reasons.push(`visually similar to your selections (score: ${visualScore})`);
     }
 
     // Price reason
