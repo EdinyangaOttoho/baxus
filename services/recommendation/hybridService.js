@@ -43,7 +43,7 @@ class HybridService {
           score: 0.25,
           type: 'diversity',
           reason: `Diverse selection representing ${whisky.spiritType} category`
-        }));
+        })).filter(item => !(userWhiskies.map(x=>x.product.id.toString()).includes(item.id.toString())));
       
       recommendations = this._combineRecommendations(
         popularRecs,
