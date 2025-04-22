@@ -40,7 +40,7 @@ class HybridService {
       const diverseRecs = whiskyModel.getDiverseWhiskies(limit)
         .map(whisky => ({
           ...whisky,
-          score: 0.45,
+          score: 0.25,
           type: 'diversity',
           reason: `Diverse selection representing ${whisky.spiritType} category`
         }));
