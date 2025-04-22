@@ -3,10 +3,11 @@ const compromise = require('compromise');
 const { WordNet } = natural;
 const wordnet = new WordNet();
 const similarity = require('../../utils/similarity');
-const logger = require('../../utils/logger');
+const imageSimilarity = require('../../utils/imageSimilarity');
 const config = require('../../config/config');
 
 class ContentBasedService {
+
   constructor() {
     this.tokenizer = new natural.WordTokenizer();
     this.tfidf = new natural.TfIdf();
@@ -14,6 +15,7 @@ class ContentBasedService {
   }
 
   async getRecommendations(userWhiskies, allWhiskies, limit = 501) {
+
     if (!userWhiskies || userWhiskies.length === 0) {
       return [];
     }
@@ -23,10 +25,21 @@ class ContentBasedService {
 
     // Score all candidate whiskies
     const scoredWhiskies = await Promise.all(
-      allWhiskies.map(async whisky => ({
-        whisky,
-        score: await this._calculateScore(whisky, userProfile)
-      }))
+      allWhiskies.map(async whisky => {
+        let visualScore = 0;
+        try {
+          visualScore = imageSimilarity.calculateVisualSimilarity(
+            userWhiskies.whisky_ids,
+            whisky.id
+          );
+        }
+        catch (error) {}
+        return {
+          whisky,
+          score: await this._calculateScore(whisky, userProfile, visualScore),
+          visualScore
+        }
+      })
     );
 
     // Filter and sort
@@ -38,7 +51,7 @@ class ContentBasedService {
         ...item.whisky,
         score: item.score,
         type: 'content',
-        reason: this._generateReason(item.whisky, userWhiskies, userProfile.priceRange)
+        reason: this._generateReason(item.whisky, userWhiskies, userProfile.priceRange, item.visualScore)
       }));
   }
 
@@ -73,7 +86,7 @@ class ContentBasedService {
     };
   }
 
-  async _calculateScore(whisky, userProfile) {
+  async _calculateScore(whisky, userProfile, visualScore) {
 
     const weights = config.recommendation.contentFields;
     
@@ -89,6 +102,8 @@ class ContentBasedService {
     const priceSimilarity = similarity.calculatePriceSimilarity(userProfile.priceRange, whisky.fair_price); // Call price similarity
 
     score += priceSimilarity * weights.price;
+
+    score += visualScore * weights.visual;
 
     // Spirit type similarity
     if (userProfile.spiritTypes.includes(whisky.spiritType)) {
@@ -124,6 +139,11 @@ class ContentBasedService {
   _generateReason(whisky, userWhiskies, priceRange=null) {
 
     const reasons = [];
+
+    // Image similarity reason
+    if (visualScore > 0.5) {
+      reasons.push(`visually similar to your selections`);
+    }
 
     // Price reason
 

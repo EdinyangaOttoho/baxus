@@ -21,7 +21,8 @@ module.exports = {
       spiritType: 0.2,
       proof: 0.05,
       tastingNotes: 0.05,
-      price: 0.5
+      price: 0.8,
+      visual: 1.2
     }
   },
   cache: {

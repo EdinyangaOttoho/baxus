@@ -5,6 +5,8 @@ const routes = require('./routes/api');
 const logger = require('./utils/logger');
 const whiskyModel = require('./models/whiskyModel');
 
+const imageSimilarity = require('./utils/imageSimilarity');
+
 const app = express();
 
 // Middleware
@@ -35,9 +37,18 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, async () => {
-  await whiskyModel.loadWhiskies();
+  console.log('Image similarity model initializing.');
+  try {
+    await imageSimilarity.initialize();
+    console.log('Image similarity model initialized.');
+  } catch (error) {
+    console.error('Failed to initialize image similarity model:', error);
+    process.exit(1);
+  }
   logger.info(`Server running on port ${PORT}`);
+  await whiskyModel.loadWhiskies();
   logger.info(`Data loaded: ${whiskyModel.whiskies.length} whiskies`);
 });
 

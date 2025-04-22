@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs-node": "^4.22.0",
     "axios": "^1.8.4",
     "compromise": "^14.14.4",
     "compute-cosine-similarity": "^1.1.0",
@@ -18,6 +20,8 @@
     "express": "^5.1.0",
     "natural": "^8.0.1",
     "node-cache": "^5.1.2",
+    "node-fetch": "^3.3.2",
+    "sharp": "^0.34.1",
     "winston": "^3.17.0"
   }
 }

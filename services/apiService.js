@@ -58,7 +58,8 @@ class ApiService {
           barrel_pick: item.product.barrel_pick,
           private: item.product.private,
           verified_date: item.product.verified_date
-        }
+        },
+        whisky_ids: response.data.map(i=>i.product.id)
       }));
       
       this.cache.set(cacheKey, normalized);
