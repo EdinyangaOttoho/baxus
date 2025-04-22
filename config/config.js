@@ -4,7 +4,7 @@ module.exports = {
     endpoints: {
       userBar: '/bar/user'
     },
-    timeout: 5000
+    timeout: 10000
   },
   recommendation: {
     maxRecommendations: 10,
