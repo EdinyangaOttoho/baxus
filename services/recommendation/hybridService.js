@@ -80,9 +80,9 @@ class HybridService {
         const bWeight = this._getTypeWeight(b.type);
         return (b.score * bWeight) - (a.score * aWeight);
       })
-      .slice(0, 5);
+      .slice(0, 20);
 
-    return this._fisherYatesShuffle(result);
+    return (this._fisherYatesShuffle(result)).slice(0, 5);
     
   }
 
